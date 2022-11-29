@@ -1,0 +1,19 @@
+a {
+    text-decoration: none;
+}
+
+.button-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 1em;
+    background-color: rgb(196, 101, 101);
+    /* padding: 0.25em 1em; */
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.button-text {
+    color: var(--clr-primary);
+    font-size: 1.15rem;
+    font-weight: var(--fw-bold);
+}
