@@ -1,6 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&family=Work+Sans:wght@400;500;600&display=swap');
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+/* Design system variables */
+:root {
+  --ff-primary: 'Work Sans', sans-serif;
+  --ff-secondary: 'Nunito Sans', sans-serif;
+
+  --fw-reg: 400;
+  --fw-bold: 600;
+
+  --clr-primary: #3849aa;
+  --clr-primary-light: #6e74dc;
+  --clr-primary-dark: #00227a;
+
+  --clr-secondary: #ffca28;
+  --clr-secondary-light: #fffd61;
+  --clr-secondary-dark: #c79a00;
+
+  --clr-white: #ffffff;
+  --clr-black: #000000;
+
+}
+
 .App {
   text-align: center;
 }
+
 
 .App-logo {
   height: 40vmin;

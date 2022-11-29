@@ -7,13 +7,16 @@ a {
     align-items: center;
     gap: 1em;
     background-color: rgb(196, 101, 101);
-    /* padding: 0.25em 1em; */
     border-radius: 20px;
     cursor: pointer;
 }
 
-.button-text {
-    color: var(--clr-primary);
-    font-size: 1.15rem;
-    font-weight: var(--fw-bold);
+.button-small {
+    width: 1em;
+    height: 1em;
+}
+
+.button-medium {
+    width: 2em;
+    height: 2em;
 }
