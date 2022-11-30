@@ -5,12 +5,14 @@ import TextArea from './components/TextArea';
 import Select from './components/Select';
 import TourneyCard from './components/TourneyCard';
 import TeamCard from './components/TeamCard';
+import Navbar from './components/Navbar';
 
 /* Components Playground */
 function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <Navbar />
         <Button text={'Long text here her her her'}/>
         <Input label={'Nama'} placeholderText={'Masukan nama Anda'} type={'text'} />
         <Input label={'Password'} placeholderText={'Masukan password Anda'} type={'password'}/>
