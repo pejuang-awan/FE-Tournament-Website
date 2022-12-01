@@ -1,32 +1,38 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../static/css/components/Navbar.css';
 import MenuItems from './MenuItems';
 
-// Template menuItems with dropdown (submenu) for navbar
-const menuItems = [
-    {
-        title: 'Home',
-        url: '/home',
-    },
-    {
-        title: 'Turnamen',
-        url: '/turnamen',
-        submenu: [
-            {
-                title: 'Buat Turnamen',
-                url: 'buat',
-            },
-            {
-                title: 'Lihat Turnamen',
-                url: 'daftar',
-            },
-        ],
-    },
-  
-];
-
-// TODO: Hardcoded navbar menu, adjust it according to the menuItems template
-export default function Navbar({ menus }) {
+// TODO: Try to use relative route for submenus
+export default function Navbar({ isCreator }) {
+    const navbarItems = [
+        {
+            title: 'Home',
+            url: '/home',
+        },
+        {
+            title: 'Turnamen',
+            url: '/tournament',
+            submenu: (isCreator) ? 
+                [
+                    {
+                        title: 'Buat Turnamen',
+                        url: '/tournament/create',
+                    },
+                    {
+                        title: 'Lihat Turnamen',
+                        url: '/tournament/list',
+                    },
+                ] : [
+                    {
+                        title: 'Lihat Turnamen',
+                        url: '/tournament/list',
+                    },
+                ]
+        },
+      
+    ];
+    
     return (
         <div className='navbar-container'>
             <div className='navbar-brand-container'>
@@ -34,14 +40,14 @@ export default function Navbar({ menus }) {
             </div>
             <div className='navbar-menus-container'>
                 <ul className='navbar-menus-list'>
-                    {menuItems.map((menu, idx) => <MenuItems items={menu} key={idx} />)}
+                    {navbarItems.map((menu, idx) => <MenuItems items={menu} key={idx} />)}
                 </ul>
             </div>
             <div className='navbar-user-container'>
                 <div className='navbar-user-content'>
                     <p>Halo, username</p>
                     <div className='navbar-user-logout'>
-                        <img src={require('../static/img/logout.png')} />
+                        <Link to='/'><img src={require('../static/img/logout.png')} /></Link>
                     </div>
                 </div>
             </div>
