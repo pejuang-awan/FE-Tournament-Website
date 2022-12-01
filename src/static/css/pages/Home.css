@@ -1,0 +1,26 @@
+h1 {
+    text-align: center;
+    font-size: 3rem;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.column {
+    text-align: center;
+    flex: 50%;
+    padding: 10px;
+}
+
+.column h2 {
+    font-size: 3rem;
+}
+
+#img-1 {
+    color: white;
+    background-image: url(../../images/101369515_edit.jpg);
+    height: 100%;
+}
