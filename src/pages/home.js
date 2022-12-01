@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../components/Button";
 import '../static/css/pages/Home.css';
+import Navbar from "../components/Navbar";
 
 export default function Home() {
 
-    const tournamentTotal = 60;
+    const [isCreator, setIsCreator] = useState(true);
+
+    const tournamentTotal = 10;
     const teamTotal = 124;
-    const gameId = 1;
+    const gameId = 3;
 
     const id = "img-" + gameId;
     const staticDuration = 500;
@@ -35,21 +38,27 @@ export default function Home() {
     });
 
     return (
-        <div id={id}>
-            <h1>Ikuti Berbagai Turnamen</h1>
-            <div class="row">
-                <div class="column">
-                    <p class="sub-title">Jumlah Turnamen</p>
-                    <h2 id="tournament-total">{tournamentTotal}</h2>
+        <React.Fragment>
+            <div id={id}>
+                <Navbar isCreator={isCreator}/>
+                <div className="home-content">
+                    <h1>Ikuti Berbagai Turnamen</h1>
+                    <div class="row">
+                        <div class="column">
+                            <p class="sub-title">Jumlah Turnamen</p>
+                            <h2 id="tournament-total">{tournamentTotal}</h2>
+                        </div>
+                        <div class="column">
+                            <p class="sub-title">Jumlah Tim Terdaftar</p>
+                            <h2 id="team-total">{teamTotal}</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <Button text="Lihat Turnamen" size="medium"/>
+                    </div>
                 </div>
-                <div class="column">
-                    <p class="sub-title">Jumlah Tim Terdaftar</p>
-                    <h2 id="team-total">{teamTotal}</h2>
-                </div>
-                <Button text="Lihat Turnamen" size="medium"/>
             </div>
-            
-        </div>
+        </React.Fragment>
     );
 }
 
