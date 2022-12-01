@@ -6,16 +6,51 @@
     border-radius: 1em;
 }
 
-.tourney-card-logo{
-    width: 50px;
-    border-radius: 50%;
-}
-
 .tourney-card-container{
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     height: 100%;
+}
+
+.tourney-card-banner{
+    display: inline-block;
+    position: relative;
+    height: 100%;
+}
+
+div.tourney-banner-img{
+    height: 100%;
+    position: relative;
+
+    background: center;
+    background-size: cover;
+}
+
+.tourney-card-name{
+    position: absolute;
+    left: 10px;
+    bottom: 20px;
+    color: #000;   
+    margin: 0;
+}
+
+p.tourney-card-name{
+    font-weight: bold;
+    font-size: 1.15em;
+}
+
+p.tourney-card-name span {
+    color: white; 
+    letter-spacing: -1px;  
+    background: rgb(0, 0, 0); /* fallback color */
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px; 
+}
+
+.tourney-card-logo{
+    width: 25px;
+    height: 25px;
 }
 
 .tourney-card-bottom{
