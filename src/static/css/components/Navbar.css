@@ -24,8 +24,13 @@
     gap: 25%;
 }
 
-.navbar-menus-list li a {
+.navbar-menus-list li button {
+    padding: 0;
+    border: 0;
+    background-color: gainsboro;
     color: black;
+    font-size: 1.25rem;
+    font-family: var(--ff-primary);
     font-weight: var(--fw-bold);
 }
 
@@ -45,7 +50,7 @@
     position: relative;
 }
 
-.menu-item-dropdownable a{
+.menu-item-dropdownable button{
     display: flex;
     gap: 10%;
 }
