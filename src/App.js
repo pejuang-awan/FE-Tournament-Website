@@ -1,48 +1,31 @@
 import './App.css';
-import Button from './components/Button';
-import Input from './components/Input';
-import TextArea from './components/TextArea';
-import Select from './components/Select';
-import TourneyCard from './components/TourneyCard';
-import TeamCard from './components/TeamCard';
-import Navbar from './components/Navbar';
+import { Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Home from './pages/Home'
+import TourneyList from './pages/TourneyList';
+import CreateTourney from './pages/CreateTourney';
+import RegisterTourney from './pages/RegisterTourney';
+import Test from './pages/Test';
+import NoRoute from './pages/NoRoute';
 
-/* Components Playground */
+// TODO: Add more route paths
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Navbar />
-        <Button text={'Long text here her her her'}/>
-        <Input label={'Nama'} placeholderText={'Masukan nama Anda'} type={'text'} />
-        <Input label={'Password'} placeholderText={'Masukan password Anda'} type={'password'}/>
-        <TextArea label={'Deskripsi'}></TextArea>
-        <Select label={'Permainan'} items={[1,2,3]}></Select>
-        <TourneyCard 
-          name="M4 World" 
-          description="Tempat RRQ akan kembali mengbadut yagesya."
-          imgUrl="https://play-lh.googleusercontent.com/IhUVzRkz5MokalaeiLulcloc8rxROw0fSPRC7-Lc5zCF_wIfhbxo3qsOjKxYp524B1dY"
-          participants={1}
-          quota={20}
-          deadline={5}
-        ></TourneyCard>
-        <TeamCard
-          teamData={
-            {
-              "captainId": "captain",
-              "members": [
-                "member1",
-                "member2",
-                "member3"
-              ],
-              "teamName": "teamku",
-              "tournamentId": 11
-            }
-          }
-          imgUrl="https://play-lh.googleusercontent.com/IhUVzRkz5MokalaeiLulcloc8rxROw0fSPRC7-Lc5zCF_wIfhbxo3qsOjKxYp524B1dY"
-        ></TeamCard>
-      </header>
-    </div>
+    <Routes>
+      <Route index element={<Login />} />
+      <Route path='login' element={<Login />} />
+      <Route path='register' element={<Register />} />
+      <Route path='home' element={<Home />} />
+      <Route path='tournament' >
+        <Route index element={<TourneyList />} />
+        <Route path='list' element={<TourneyList />} />
+        <Route path='create' element={<CreateTourney />} />
+        <Route path='register/:idTournament' element={<RegisterTourney />} />
+      </Route>
+      <Route path='test' element={<Test />} />
+      <Route path='*' element={<NoRoute />} />
+    </Routes>
   )
 }
 
