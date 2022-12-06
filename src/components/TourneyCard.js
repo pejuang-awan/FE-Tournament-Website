@@ -14,7 +14,9 @@ export default function tourneyCard({ name, description, participants, quota, de
                     />
                     <p className='tourney-card-name'><span>{name}</span></p>
                 </div>
-                <p className='tourney-card-desc'>{description}</p>
+                <div className='tourney-card-desc-container'>
+                    <p className='tourney-card-desc'>{description}</p>
+                </div>
                 <div className='tourney-card-bottom'>
                     <div className='tourney-card-participants'>
                         <RiTeamFill className='tourney-card-logo'/>
@@ -24,7 +26,7 @@ export default function tourneyCard({ name, description, participants, quota, de
                     <div className='tourney-card-deadline'>
                         <FiClock className='tourney-card-logo'/>
                         <p>Tenggat Daftar</p>
-                        <p>{deadline} hari</p>
+                        <p>{deadline}</p>
                     </div>
                 </div>
             </div>
