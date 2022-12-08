@@ -4,7 +4,7 @@ import '../static/css/components/Navbar.css';
 import MenuItems from './MenuItems';
 
 // TODO: Try to use relative route for submenus
-export default function Navbar({ isCreator }) {
+export default function Navbar({ isCreator, toggleLogout, username }) {
     const navbarItems = [
         {
             title: 'Home',
@@ -45,9 +45,9 @@ export default function Navbar({ isCreator }) {
             </div>
             <div className='navbar-user-container'>
                 <div className='navbar-user-content'>
-                    <p>Halo, username</p>
+                    <p>Halo, {username}</p>
                     <div className='navbar-user-logout'>
-                        <Link to='/'><img src={require('../static/img/logout.png')} /></Link>
+                        <Link to='/'><img onClick={toggleLogout} src={require('../static/img/logout.png')} /></Link>
                     </div>
                 </div>
             </div>
