@@ -11,9 +11,14 @@ export default function MenuItems ({ items }) {
             {items.submenu ? (
                 <React.Fragment>
                     <div className='menu-item-dropdownable'>
-                        <button onClick={() => setDropdown((prev) => !prev)}>
+                        <button onClick={() => setDropdown((prev) => !prev)} className={`dropdown-btn ${dropdown ? "active" : "" }`}>
                             {items.title}
-                            <img className='dropdown-icon' src={require('../static/img/chevron-bottom.png')}></img>
+                            {dropdown ? (
+                                <img className='dropdown-icon' src={require('../static/img/chevron-upper.png')}></img>
+                            ) : (
+                                <img className='dropdown-icon' src={require('../static/img/chevron-bottom.png')}></img>
+                            )}
+                            
                         </button>
                         <Dropdown submenus={items.submenu} dropdown={dropdown} />
                     </div>

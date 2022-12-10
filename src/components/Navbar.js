@@ -45,7 +45,7 @@ export default function Navbar({ isCreator, toggleLogout, username }) {
             </div>
             <div className='navbar-user-container'>
                 <div className='navbar-user-content'>
-                    <p>Halo, {username}</p>
+                    <p>Halo, <strong>{username}</strong></p>
                     <div className='navbar-user-logout'>
                         <Link to='/'><img onClick={toggleLogout} src={require('../static/img/logout.png')} /></Link>
                     </div>
