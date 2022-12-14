@@ -9,16 +9,16 @@ import axios from 'axios';
 
 export default function TourneyList() {
 
+    const [isCreator, setIsCreator] = useState(true);
     const [tournamentList, setTournamentList] = useState([]);
     const [participantList, setParticipantList] = useState([]);
-    const baseUrl = "https://si-tourney-authentication-uuq75raixq-et.a.run.app/api/";
 
     const dummy = {
         "id": 3,
         "username": "zul",
         "role": 1,
         "gameType": 2,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImFuamF5YW5pMiIsIlJvbGUiOjEsImV4cCI6MTY3MDM4NDA2NH0.Y27xF9sejHvvPK3uENwluXKQEGvWVnRT6iZNw6KJ6-8"
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImFuamF5YW5pMiIsIlJvbGUiOjEsImV4cCI6MTY3MDQxNjQ4MH0.DgtKEnMQxbxJAjFMYw9HiYCUtd44fl7LCJY9jIXN8cI"
     }
 
     const cardImgUrl = imgLink(imgURL[dummy.gameType].TOURNEY_CARD_HEADER)
@@ -36,7 +36,7 @@ export default function TourneyList() {
         const fetchTournamentListData = async () => {
             axios({
                 method: 'get',
-                url: baseUrl + 'tourney-manager/tournaments/' + dummy.gameType,
+                url: `${process.env.REACT_APP_BE_BASE_URL}` + 'tourney-manager/tournaments/' + dummy.gameType,
                 headers: {
                     'Authorization': "Bearer " + dummy.token
                 }
@@ -49,7 +49,8 @@ export default function TourneyList() {
 
                     tournamentData.forEach(tournament => {
                         promises.push(
-                            axios(baseUrl + 'tourney-registry/participants/11',{ // 'tourney-registry/participants/' + tournament.ID
+                            axios(`${process.env.REACT_APP_BE_BASE_URL}` + 'tourney-registry/participants/11',{ // 'tourney-registry/participants/' + tournament.ID
+                                method:'get',
                                 headers: {
                                     'Authorization': "Bearer " + dummy.token
                                 }
@@ -79,13 +80,13 @@ export default function TourneyList() {
 
     return (
         <div>
-            <Navbar/>
+            <Navbar isCreator={isCreator}/>
             <div className='header-container'>
                 <div
                 className='banner'
                 style={{backgroundImage: `url(${bannerImgUrl})`}}
                 />
-                    <h1><span>Mobile Legends: Bang Bang</span></h1>
+                    <h1 className='game-name'><span>Mobile Legends: Bang Bang</span></h1>
                 </div>
             <div className='body-container'>
                 {(() => {

@@ -6,14 +6,6 @@
     border-radius: 1em;
 }
 
-<<<<<<< HEAD
-.tourney-card-logo{
-    width: 50px;
-    border-radius: 50%;
-}
-
-=======
->>>>>>> e4a1d567093e3c904786a4ec3eec1d13baea8bbb
 .tourney-card-container{
     display: flex;
     flex-direction: column;
@@ -21,8 +13,6 @@
     height: 100%;
 }
 
-<<<<<<< HEAD
-=======
 .tourney-card-banner{
     display: inline-block;
     position: relative;
@@ -63,17 +53,12 @@ p.tourney-card-name span {
     height: 25px;
 }
 
->>>>>>> e4a1d567093e3c904786a4ec3eec1d13baea8bbb
 .tourney-card-bottom{
     display: flex;
     flex-direction: row;
     text-align: center;
 }
 
-<<<<<<< HEAD
-.tourney-card-tourney-desc{
-    flex-grow: 2;
-=======
 .tourney-card-desc-container{
     min-height: 35%;
     display: flex;
@@ -84,7 +69,6 @@ p.tourney-card-name span {
 .tourney-card-desc{
     margin: 0;
     font-weight: bold;
->>>>>>> e4a1d567093e3c904786a4ec3eec1d13baea8bbb
 }
 
 .tourney-card-name, .tourney-card-desc{

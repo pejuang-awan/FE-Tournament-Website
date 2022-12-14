@@ -1,17 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../components/Button";
 import '../static/css/pages/Home.css';
 import Navbar from "../components/Navbar";
+import { imgURL } from "../constant/imgURL";
+import imgLink from "../helper/imgLink";
+import gcdCalc from "../helper/gcdCalc";
+import axios from 'axios';
 
 export default function Home() {
 
     const [isCreator, setIsCreator] = useState(true);
+    const [homeData, setHomeData] = useState({
+        'teamTotal': 0,
+        'tournamentTotal':0
+    })
 
-    const tournamentTotal = 10;
-    const teamTotal = 124;
-    const gameId = 3;
+    const dummy = {
+        'role':1,
+        "gameType":1,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImFuamF5YW5pMiIsIlJvbGUiOjEsImV4cCI6MTY3MTEzMjI1Mn0.UY5lSEmCoVobNfXD2zDZ3GfZ1rCA6nbdC4nwOHiLrAw"
+    }
 
-    const id = "img-" + gameId;
+    const bannerImgUrl = imgLink(imgURL[dummy.gameType].TOURNEY_BANNER)
+
     const staticDuration = 500;
 
     function animateValue(obj, start, end, duration) {
@@ -27,30 +38,58 @@ export default function Home() {
         window.requestAnimationFrame(step);
     }
 
-    React.useEffect(() => {
+    const animateText = () => {
         const obj1 = document.getElementById("tournament-total");
         const obj2 = document.getElementById("team-total");
 
-        const duration = gcd_two_numbers(tournamentTotal, teamTotal) * staticDuration;
+        const duration = gcdCalc(homeData.tournamentTotal, homeData.teamTotal) * staticDuration;
 
-        animateValue(obj1, 0, tournamentTotal, duration);
-        animateValue(obj2, 0, teamTotal, duration);
-    });
+        animateValue(obj1, 0, homeData.tournamentTotal ?? 0, duration);
+        animateValue(obj2, 0, homeData.teamTotal ?? 0, duration);
+    }
+
+    
+    useEffect(() => {
+        
+        const fetchHomeData = async () => {
+            return axios(`${process.env.REACT_APP_BE_BASE_URL}` + 'tourney-manager/get-count/' + dummy.gameType,{ 
+                method:'get',
+                headers: {
+                    'Authorization': "Bearer " + dummy.token
+                }
+            })
+                .then((response) => {
+                    const data =  response.data.data;
+                    console.log(data.teamTotal);
+                    setHomeData({
+                        'teamTotal': data.teamTotal,
+                        'tournamentTotal': data.tournamentTotal
+                    })
+                })
+        }
+
+        fetchHomeData();
+    }, []);
+
+    useEffect(() => {
+        console.log(homeData);
+        animateText();
+    }, [homeData])
 
     return (
-        <React.Fragment>
-            <div id={id}>
+        <div className="home-container">
+            <div className="img-banner" style={{backgroundImage: `url(${bannerImgUrl})`}}>
                 <Navbar isCreator={isCreator}/>
                 <div className="home-content">
                     <h1>Ikuti Berbagai Turnamen</h1>
                     <div class="row">
                         <div class="column">
                             <p class="sub-title">Jumlah Turnamen</p>
-                            <h2 id="tournament-total">{tournamentTotal}</h2>
+                            <h2 id="tournament-total">{homeData.tournamentTotal}</h2>
                         </div>
                         <div class="column">
                             <p class="sub-title">Jumlah Tim Terdaftar</p>
-                            <h2 id="team-total">{teamTotal}</h2>
+                            <h2 id="team-total">{homeData.teamTotal}</h2>
                         </div>
                     </div>
                     <div class="row">
@@ -58,19 +97,6 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-        </React.Fragment>
+        </div>
     );
-}
-
-function gcd_two_numbers(x, y) {
-    if ((typeof x !== 'number') || (typeof y !== 'number')) 
-      return false;
-    x = Math.abs(x);
-    y = Math.abs(y);
-    while(y) {
-      var t = y;
-      y = x % y;
-      x = t;
-    }
-    return x;
 }
