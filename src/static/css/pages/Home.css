@@ -48,12 +48,13 @@ h1 {
     width: fit-content;
 }
 
-#root {
+#root, .home-container {
     height: 100%;
 }
 
 .home-container{
-    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .img-banner {
@@ -64,6 +65,7 @@ h1 {
     background-repeat: no-repeat;
     background-size: cover;
     z-index: -100;
+    flex-grow: 1;
 }
 
 #tournament-total, #team-total {

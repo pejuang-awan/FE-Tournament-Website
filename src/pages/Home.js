@@ -78,8 +78,8 @@ export default function Home() {
 
     return (
         <div className="home-container">
+            <Navbar isCreator={isCreator}/>
             <div className="img-banner" style={{backgroundImage: `url(${bannerImgUrl})`}}>
-                <Navbar isCreator={isCreator}/>
                 <div className="home-content">
                     <h1>Ikuti Berbagai Turnamen</h1>
                     <div class="row">
