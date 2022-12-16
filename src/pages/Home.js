@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import Button from "../components/Button";
 import '../static/css/pages/Home.css';
 import Navbar from "../components/Navbar";
@@ -9,20 +10,15 @@ import axios from 'axios';
 
 export default function Home() {
 
-    const [isCreator, setIsCreator] = useState(true);
+    const [user, setUser] = useState({});
+    const [isCreator, setIsCreator] = useState(false);
+    const navigate = useNavigate();
+    const [imgBanner, setImgBanner] = useState('');
+    const [isfetched, setIsfetched] = useState(false);
     const [homeData, setHomeData] = useState({
         'teamTotal': 0,
         'tournamentTotal':0
     })
-
-    const dummy = {
-        'role':1,
-        "gameType":1,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImFuamF5YW5pMiIsIlJvbGUiOjEsImV4cCI6MTY3MTEzMjI1Mn0.UY5lSEmCoVobNfXD2zDZ3GfZ1rCA6nbdC4nwOHiLrAw"
-    }
-
-    const bannerImgUrl = imgLink(imgURL[dummy.gameType].TOURNEY_BANNER)
-
     const staticDuration = 500;
 
     function animateValue(obj, start, end, duration) {
@@ -48,38 +44,63 @@ export default function Home() {
         animateValue(obj2, 0, homeData.teamTotal ?? 0, duration);
     }
 
-    
-    useEffect(() => {
-        
-        const fetchHomeData = async () => {
-            return axios(`${process.env.REACT_APP_BE_BASE_URL}` + 'tourney-manager/get-count/' + dummy.gameType,{ 
-                method:'get',
-                headers: {
-                    'Authorization': "Bearer " + dummy.token
-                }
-            })
-                .then((response) => {
-                    const data =  response.data.data;
-                    console.log(data.teamTotal);
-                    setHomeData({
-                        'teamTotal': data.teamTotal,
-                        'tournamentTotal': data.tournamentTotal
-                    })
+    const fetchHomeData = async () => {
+        return axios(`${process.env.REACT_APP_BE_BASE_URL}` + 'tourney-manager/get-count/' + user.gameType,{ 
+            method:'get',
+            headers: {
+                'Authorization': "Bearer " + user.token
+            }
+        })
+            .then((response) => {
+                const data =  response.data.data;
+                console.log(data.teamTotal);
+                setHomeData({
+                    'teamTotal': data.teamTotal,
+                    'tournamentTotal': data.tournamentTotal
                 })
-        }
+            })
+    }
 
-        fetchHomeData();
+    const logOut = () => {
+        sessionStorage.removeItem('user_data');
+        navigate('/');
+    };
+
+    useEffect(() => {
+
+        if (sessionStorage.getItem('user_data') === null) {
+            navigate('/');
+        } else {
+            setUser(JSON.parse(sessionStorage.getItem('user_data')));
+        }
+        
     }, []);
 
     useEffect(() => {
-        console.log(homeData);
+        if (user.token === null) {
+            navigate('/');
+        }
+        if (user.role === 2) {
+            setIsCreator(true);
+        }
+
+        if (!isfetched && user.token !== undefined){
+            console.log(user);
+            fetchHomeData();
+            setImgBanner(imgLink(imgURL[user.gameType].TOURNEY_BANNER));
+            setIsfetched(true);
+        }
+    }, [user])
+    
+
+    useEffect(() => {
         animateText();
     }, [homeData])
 
     return (
         <div className="home-container">
-            <Navbar isCreator={isCreator}/>
-            <div className="img-banner" style={{backgroundImage: `url(${bannerImgUrl})`}}>
+            <Navbar isCreator={isCreator} toggleLogout={logOut} username={user.username || 'tamu'}/>
+            <div className="img-banner" style={{backgroundImage: `url(${imgBanner})`}}>
                 <div className="home-content">
                     <h1>Ikuti Berbagai Turnamen</h1>
                     <div class="row">
