@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import '../static/css/pages/CreateTourney.css';
 import Button from '../components/Button';
 import DateInput from '../components/DateInput';
@@ -31,7 +30,6 @@ export default function CreateTourney() {
     };
 
     const create = async (event) => {
-        console.log(inputs)
         event.preventDefault();
         await axios({
             method: 'post',
@@ -51,8 +49,7 @@ export default function CreateTourney() {
                 'maxTeam': parseInt(inputs.maxTeam),
             },
         }).then((response) => {
-            // TODO: Handle success
-            console.log(response);
+            navigate('/tournament/detail/' + response.data['data']['ID']);
         }).catch((error) => {
             alert(error);
         });
