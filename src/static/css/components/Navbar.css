@@ -1,0 +1,98 @@
+a {
+    font-weight: var(--fw-reg);
+}
+
+a:hover {
+    font-weight: var(--fw-bold);
+    text-decoration: none;
+}
+
+.navbar-container {
+    width: 100%;
+    display: flex;
+    background-color: gainsboro;
+    justify-content: space-between;
+    font-size: 1.25rem;
+    color: black;
+    font-family: var(--ff-primary);
+    z-index: 1000;
+}
+
+.navbar-brand-container {
+    margin: 0 1em;
+}
+
+.navbar-menus-container {
+    width: 40%;
+}
+
+.navbar-menus-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    justify-content: center;
+    gap: 25%;
+}
+
+.navbar-menus-list li button {
+    padding: 0;
+    border: 0;
+    background-color: gainsboro;
+    color: black;
+    font-size: 1.25rem;
+    font-family: var(--ff-primary);
+    font-weight: var(--fw-reg);
+}
+
+.navbar-menus-list li button:hover {
+    font-weight: var(--fw-bold);
+}
+
+.navbar-user-content {
+    display: flex;
+    margin: 0 1em;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar-user-logout img {
+    width: 1.5rem;
+    margin-top: 20%;
+}
+
+.menu-item-dropdownable {
+    position: relative;
+}
+
+.menu-item-dropdownable button{
+    display: flex;
+    gap: 10%;
+}
+
+.dropdown-btn.active {
+    font-weight: var(--fw-bold);
+}
+
+.dropdown-icon {
+    width: 1.25rem;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    left: 0;
+    padding: 0;
+    list-style: none;
+    background-color: gainsboro;
+    border: 2px solid black;
+    width: max-content;
+}
+
+.dropdown.show {
+    display: inline-block;
+}
+
+.dropdown.show .menu-items {
+    margin: 0.5em 0.25em;
+    text-align: left;
+}
