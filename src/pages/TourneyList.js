@@ -122,7 +122,7 @@ export default function TourneyList() {
                 {(() => {
                     if (tournamentList){
                         const content = tournamentList.map((tournament) =>
-                            <div key={tournament.ID} onclick={() => navigate('/tournament/detail/' + tournament.ID)}>
+                            <div key={tournament.ID} onClick={() =>navigate("detail\\" + tournament.ID)}>
                                 <TourneyCard 
                                     name={truncate(tournament.name, 20)} 
                                     description={tournament.description}
