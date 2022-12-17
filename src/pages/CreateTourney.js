@@ -6,6 +6,7 @@ import Button from '../components/Button';
 import DateInput from '../components/DateInput';
 import Input from "../components/Input";
 import TextArea from '../components/TextArea';
+import Navbar from "../components/Navbar";
 
 export default function CreateTourney() {
     const [user, setUser] = useState({});
@@ -36,7 +37,7 @@ export default function CreateTourney() {
             headers: {
                 'Authorization': "Bearer " + user.token
             },
-            url: baseAuthURL + '/api/tourney-manager/tournament',
+            url: `${process.env.REACT_APP_BE_BASE_URL}` + 'tourney-manager/tournament',
             data: {
                 'name': inputs.name,
                 'game': user.gameType,
@@ -56,69 +57,73 @@ export default function CreateTourney() {
     };
 
     return (
-        <div className='main-container'>
-            <div className='create-display-container'>
-                <h1>Selamat Datang di SI Tourney</h1>
-                <p>Portal game terbesar di kelas Komputasi Awan</p>
-            </div>
+        <div className='create-main-container'>
+            <Navbar isCreator={user.role === 2} username={user.username || 'tamu'}/>
 
-            <div className='create-container'>
-                <div className='auth-content'>
-                    <form onSubmit={create}>
-                        <Input 
-                            type={'text'} 
-                            placeholderText={'Nama Turnamen'} 
-                            name={'name'} 
-                            value={inputs.name || ''} 
-                            onChange={handleInputChange} 
-                        />
-                        <Input 
-                            type={'number'} 
-                            placeholderText={'Jumlah Pendaftar Maksimal'} 
-                            name={'maxTeam'} 
-                            value={inputs.maxTeam || ''} 
-                            onChange={handleInputChange}
-                        />
-                        <Input 
-                            type={'number'} 
-                            placeholderText={'Hadiah'} 
-                            name={'prize'} 
-                            value={inputs.prize || ''} 
-                            onChange={handleInputChange}
-                        />
-                        <div className='create-date-container'>
-                            <DateInput
-                                selected={startDate}
-                                onChange={(date) => setStartDate(date)}
+            <div className='create-body-container'>
+                <div className='create-display-container'>
+                    <h1>Selamat Datang di SI Tourney</h1>
+                    <p>Portal game terbesar di kelas Komputasi Awan</p>
+                </div>
+
+                <div className='create-container'>
+                    <div className='auth-content'>
+                        <form onSubmit={create}>
+                            <Input 
+                                type={'text'} 
+                                placeholderText={'Nama Turnamen'} 
+                                name={'name'} 
+                                value={inputs.name || ''} 
+                                onChange={handleInputChange} 
                             />
-                            <div style={{width: '1em'}}></div>
-                            <DateInput
-                                selected={endDate}
-                                onChange={(date) => setEndDate(date)}
+                            <Input 
+                                type={'number'} 
+                                placeholderText={'Jumlah Pendaftar Maksimal'} 
+                                name={'maxTeam'} 
+                                value={inputs.maxTeam || ''} 
+                                onChange={handleInputChange}
                             />
-                        </div>
-                        <TextArea
-                            placeholderText={'Deskripsi Turnamen'}
-                            name={'description'}
-                            value={inputs.description || ''}
-                            onChange={handleInputChange}
-                        />
-                        <Input 
-                            type={'text'} 
-                            placeholderText={'Lokasi'} 
-                            name={'location'} 
-                            value={inputs.location || ''} 
-                            onChange={handleInputChange} 
-                        />
-                        <Input 
-                            type={'text'} 
-                            placeholderText={'Kontak'} 
-                            name={'contact'} 
-                            value={inputs.contact || ''} 
-                            onChange={handleInputChange} 
-                        />
-                        <Button text={'Daftar'} type={'submit'} size={'small'} />
-                    </form>
+                            <Input 
+                                type={'number'} 
+                                placeholderText={'Hadiah'} 
+                                name={'prize'} 
+                                value={inputs.prize || ''} 
+                                onChange={handleInputChange}
+                            />
+                            <div className='create-date-container'>
+                                <DateInput
+                                    selected={startDate}
+                                    onChange={(date) => setStartDate(date)}
+                                />
+                                <div style={{width: '1em'}}></div>
+                                <DateInput
+                                    selected={endDate}
+                                    onChange={(date) => setEndDate(date)}
+                                />
+                            </div>
+                            <TextArea
+                                placeholderText={'Deskripsi Turnamen'}
+                                name={'description'}
+                                value={inputs.description || ''}
+                                onChange={handleInputChange}
+                            />
+                            <Input 
+                                type={'text'} 
+                                placeholderText={'Lokasi'} 
+                                name={'location'} 
+                                value={inputs.location || ''} 
+                                onChange={handleInputChange} 
+                            />
+                            <Input 
+                                type={'text'} 
+                                placeholderText={'Kontak'} 
+                                name={'contact'} 
+                                value={inputs.contact || ''} 
+                                onChange={handleInputChange} 
+                            />
+                            <Button text={'Daftar'} type={'submit'} size={'small'} />
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

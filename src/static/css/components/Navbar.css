@@ -15,6 +15,7 @@ a:hover {
     font-size: 1.25rem;
     color: black;
     font-family: var(--ff-primary);
+    z-index: 1000;
 }
 
 .navbar-brand-container {
