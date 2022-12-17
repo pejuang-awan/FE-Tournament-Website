@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from "../components/Button";
 import '../static/css/pages/Home.css';
 import Navbar from "../components/Navbar";
@@ -87,7 +87,7 @@ export default function Home() {
         if (!isfetched && user.token !== undefined){
             console.log(user);
             fetchHomeData();
-            setImgBanner(imgLink(imgURL[user.gameType].TOURNEY_BANNER));
+            setImgBanner(imgLink(imgURL[user.gameType].TOURNEY_HOME));
             setIsfetched(true);
         }
     }, [user])
@@ -113,8 +113,10 @@ export default function Home() {
                             <h2 id="team-total">{homeData.teamTotal}</h2>
                         </div>
                     </div>
-                    <div class="row">
-                        <Button text="Lihat Turnamen" size="medium"/>
+                    <div class="row">    
+                        <Link to={'/tournament'}>
+                            <Button text="Lihat Turnamen" size="medium"/>
+                        </Link>
                     </div>
                 </div>
             </div>

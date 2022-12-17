@@ -7,9 +7,9 @@ export default function dayCalculator(date){
     const differenceMs = date2 - date1;
     const daysBetween = Math.round(differenceMs / ONE_DAY);
 
-    if (daysBetween < 0) {
+    if (!daysBetween || daysBetween < 0) {
         return "Sudah Tutup";
     } else {
-        return daysBetween.toString() + "hari";
+        return daysBetween.toString() + " hari";
     }
 }

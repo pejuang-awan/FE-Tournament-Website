@@ -8,6 +8,7 @@ import CreateTourney from './pages/CreateTourney';
 import RegisterTourney from './pages/RegisterTourney';
 import Test from './pages/Test';
 import NoRoute from './pages/NoRoute';
+import TourneyDetail from './pages/TourneyDetail';
 
 // TODO: Add more route paths
 function App() {
@@ -19,7 +20,7 @@ function App() {
       <Route path='home' element={<Home />} />
       <Route path='tournament' >
         <Route index element={<TourneyList />} />
-        <Route path='list' element={<TourneyList />} />
+        <Route path='detail/:idTournament' element={<TourneyDetail />} />
         <Route path='create' element={<CreateTourney />} />
         <Route path='register/:idTournament' element={<RegisterTourney />} />
       </Route>

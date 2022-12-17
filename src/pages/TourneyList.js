@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../static/css/pages/TourneyList.css';
 import Navbar from '../components/Navbar';
 import TourneyCard from '../components/TourneyCard';
@@ -9,74 +10,103 @@ import axios from 'axios';
 
 export default function TourneyList() {
 
-    const [isCreator, setIsCreator] = useState(true);
+    const [user, setUser] = useState({});
+    const [isCreator, setIsCreator] = useState(false);
+    const navigate = useNavigate();
     const [tournamentList, setTournamentList] = useState([]);
     const [participantList, setParticipantList] = useState([]);
+    const [imgBanner, setImgBanner] = useState('');
+    const [imgCard, setImgCard] = useState('');
+    const [isfetched, setIsfetched] = useState(false);
 
-    const dummy = {
-        "id": 3,
-        "username": "zul",
-        "role": 1,
-        "gameType": 2,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImFuamF5YW5pMiIsIlJvbGUiOjEsImV4cCI6MTY3MDQxNjQ4MH0.DgtKEnMQxbxJAjFMYw9HiYCUtd44fl7LCJY9jIXN8cI"
-    }
-
-    const cardImgUrl = imgLink(imgURL[dummy.gameType].TOURNEY_CARD_HEADER)
-    const bannerImgUrl = imgLink(imgURL[dummy.gameType].TOURNEY_BANNER)
+    const logOut = () => {
+        sessionStorage.removeItem('user_data');
+        navigate('/');
+    };
 
     const getParticipantsNumber = (tourneyID) => {
         if (participantList[tourneyID]) {
-            return participantList[tourneyID];
+            return participantList[tourneyID].length;
         } else {
             return 0;
         }
     }
 
-    useEffect(() => {
-        const fetchTournamentListData = async () => {
-            axios({
-                method: 'get',
-                url: `${process.env.REACT_APP_BE_BASE_URL}` + 'tourney-manager/tournaments/' + dummy.gameType,
-                headers: {
-                    'Authorization': "Bearer " + dummy.token
-                }
-            })
-                .then((response) => {
-                    const tournamentData = response.data.data;
-                    setTournamentList(tournamentData);
+    const truncate = (str, n) => {
+        return (str.length > n) ? str.substr(0, n - 1) + '..' : str;
+    }
 
-                    const promises = [];
+    const fetchTournamentListData = async () => {
+        axios({
+            method: 'get',
+            url: `${process.env.REACT_APP_BE_BASE_URL}` + 'tourney-manager/tournaments/' + user.gameType,
+            headers: {
+                'Authorization': "Bearer " + user.token
+            }
+        })
+            .then((response) => {
+                const tournamentData = response.data.data;
+                console.log(tournamentData);
+                setTournamentList(tournamentData);
 
-                    tournamentData.forEach(tournament => {
-                        promises.push(
-                            axios(`${process.env.REACT_APP_BE_BASE_URL}` + 'tourney-registry/participants/11',{ // 'tourney-registry/participants/' + tournament.ID
-                                method:'get',
-                                headers: {
-                                    'Authorization': "Bearer " + dummy.token
-                                }
-                            })
-                        );
-                    });
+                const promises = [];
 
-                    Promise.all(promises).then(results => {
-                        const tempList = {};
+                tournamentData.forEach(tournament => {
+                    promises.push(
+                        axios(`${process.env.REACT_APP_BE_BASE_URL}` + 'tourney-registry/participants/' + tournament.ID,{ 
+                            method:'get',
+                            headers: {
+                                'Authorization': "Bearer " + user.token
+                            }
+                        })
+                    );
+                });
 
-                        results.forEach(result => {
-                            const url = result.request.responseURL.toString().split('/');
-                            const tourneyID = url[url.length-1]
+                Promise.all(promises).then(results => {
+                    const tempList = {};
+
+                    results.forEach(result => {
+                        const url = result.request.responseURL.toString().split('/');
+                        const tourneyID = url[url.length-1]
+                        if (result.data.data != null){
                             tempList[tourneyID] = result.data.data;
-                        });
-
-                        setParticipantList(tempList);
-
+                        } else {
+                            tempList[tourneyID] = [];
+                        }
                     });
 
-                }).catch((error) => {
-                    console.log(error);
-                })
+                    setParticipantList(tempList);
+
+                });
+
+            }).catch((error) => {
+                console.log(error);
+            })
+    }
+
+    useEffect(() => {
+        if (sessionStorage.getItem('user_data') === null) {
+            navigate('/');
+        } else {
+            setUser(JSON.parse(sessionStorage.getItem('user_data')));
         }
-        fetchTournamentListData();
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (user.token === null) {
+            navigate('/');
+        }
+        if (user.role === 2) {
+            setIsCreator(true);
+        }
+
+        if (!isfetched && user.token !== undefined){
+            fetchTournamentListData();
+            setImgBanner(imgLink(imgURL[user.gameType].TOURNEY_BANNER));
+            setImgCard(imgLink(imgURL[user.gameType].TOURNEY_CARD_HEADER));
+            setIsfetched(true);
+        }
+    }, [user])
 
     return (
         <div>
@@ -84,7 +114,7 @@ export default function TourneyList() {
             <div className='header-container'>
                 <div
                 className='banner'
-                style={{backgroundImage: `url(${bannerImgUrl})`}}
+                style={{backgroundImage: `url(${imgBanner})`}}
                 />
                     <h1 className='game-name'><span>Mobile Legends: Bang Bang</span></h1>
                 </div>
@@ -92,14 +122,14 @@ export default function TourneyList() {
                 {(() => {
                     if (tournamentList){
                         const content = tournamentList.map((tournament) =>
-                            <div key={tournament.ID}>
+                            <div key={tournament.ID} onclick={() => navigate('/tournament/detail/' + tournament.ID)}>
                                 <TourneyCard 
-                                    name={tournament.name} 
+                                    name={truncate(tournament.name, 20)} 
                                     description={tournament.description}
-                                    imgUrl={cardImgUrl}
+                                    imgUrl={imgCard}
                                     participants={getParticipantsNumber(tournament.ID)}
                                     quota={tournament.maxTeam}
-                                    deadline={dayCalculator(tournament.endDate)}
+                                    deadline={dayCalculator(tournament.endDate)} 
                                 ></TourneyCard>
                             </div>
                     ) 
