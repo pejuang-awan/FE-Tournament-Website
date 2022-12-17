@@ -84,10 +84,6 @@ export default function TourneyList() {
             })
     }
 
-    const sayHello = () => {
-        alert('Hello!');
-      }
-
     useEffect(() => {
         if (sessionStorage.getItem('user_data') === null) {
             navigate('/');
