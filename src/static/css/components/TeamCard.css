@@ -4,6 +4,10 @@
     border: 2px solid;
     overflow: hidden;
     border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
 }
 
 .team-card-img{
@@ -11,12 +15,6 @@
     border-radius: 50%;
 }
 
-.team-card{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 100%;
-}
 
 .team-card-header{
     /* margin-top: 10px; */
@@ -27,7 +25,7 @@
 }
 
 .team-card-logo{
-    margin-left: 20px;
+    margin: auto 10px;
 }
 
 .team-card-name{

@@ -14,7 +14,6 @@ export default function TourneyList() {
     const [isCreator, setIsCreator] = useState(false);
     const navigate = useNavigate();
     const [tournamentList, setTournamentList] = useState([]);
-    const [participantList, setParticipantList] = useState([]);
     const [imgBanner, setImgBanner] = useState('');
     const [imgCard, setImgCard] = useState('');
     const [isfetched, setIsfetched] = useState(false);
@@ -23,14 +22,6 @@ export default function TourneyList() {
         sessionStorage.removeItem('user_data');
         navigate('/');
     };
-
-    const getParticipantsNumber = (tourneyID) => {
-        if (participantList[tourneyID]) {
-            return participantList[tourneyID].length;
-        } else {
-            return 0;
-        }
-    }
 
     const truncate = (str, n) => {
         return (str.length > n) ? str.substr(0, n - 1) + '..' : str;
@@ -48,37 +39,6 @@ export default function TourneyList() {
                 const tournamentData = response.data.data;
                 console.log(tournamentData);
                 setTournamentList(tournamentData);
-
-                const promises = [];
-
-                tournamentData.forEach(tournament => {
-                    promises.push(
-                        axios(`${process.env.REACT_APP_BE_BASE_URL}` + 'tourney-registry/participants/' + tournament.ID,{ 
-                            method:'get',
-                            headers: {
-                                'Authorization': "Bearer " + user.token
-                            }
-                        })
-                    );
-                });
-
-                Promise.all(promises).then(results => {
-                    const tempList = {};
-
-                    results.forEach(result => {
-                        const url = result.request.responseURL.toString().split('/');
-                        const tourneyID = url[url.length-1]
-                        if (result.data.data != null){
-                            tempList[tourneyID] = result.data.data;
-                        } else {
-                            tempList[tourneyID] = [];
-                        }
-                    });
-
-                    setParticipantList(tempList);
-
-                });
-
             }).catch((error) => {
                 console.log(error);
             })
@@ -127,17 +87,17 @@ export default function TourneyList() {
                                     name={truncate(tournament.name, 20)} 
                                     description={tournament.description}
                                     imgUrl={imgCard}
-                                    participants={getParticipantsNumber(tournament.ID)}
+                                    participants={tournament.registeredTeam}
                                     quota={tournament.maxTeam}
                                     deadline={dayCalculator(tournament.endDate)} 
                                 ></TourneyCard>
                             </div>
-                    ) 
-                    return (
-                        <>
-                            {content}
-                        </>
-                    )
+                        ) 
+                        return (
+                            <>
+                                {content}
+                            </>
+                        )
                     }
                 })()}
             </div>
