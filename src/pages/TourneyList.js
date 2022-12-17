@@ -84,6 +84,10 @@ export default function TourneyList() {
             })
     }
 
+    const sayHello = () => {
+        alert('Hello!');
+      }
+
     useEffect(() => {
         if (sessionStorage.getItem('user_data') === null) {
             navigate('/');
@@ -122,7 +126,7 @@ export default function TourneyList() {
                 {(() => {
                     if (tournamentList){
                         const content = tournamentList.map((tournament) =>
-                            <div key={tournament.ID} onclick={() => navigate('/tournament/detail/' + tournament.ID)}>
+                            <div className='tesaja' key={tournament.ID} onClick={() =>navigate("detail\\" + tournament.ID)}>
                                 <TourneyCard 
                                     name={truncate(tournament.name, 20)} 
                                     description={tournament.description}

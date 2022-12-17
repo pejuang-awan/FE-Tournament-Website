@@ -1,13 +1,15 @@
 import React from 'react';
-import { Routes, Route, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export default function TourneyDetail() {
 
-    let { tournamentId } = useParams();
+    let { idTournament } = useParams();
+
+    console.log(idTournament);
 
     return (
       <div id="todo">
-        <h1>{tournamentId}</h1>
+        <h1>Tourney with ID: {idTournament}</h1>
       </div>
     );
   }
