@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../static/css/pages/Login.css';
 import Button from '../components/Button';
 import Input from '../components/Input';
@@ -47,28 +47,40 @@ export default function Login() {
     return (
         <div className='main-container'>
             <div className='intro-container'>
-                <h1>Selamat Datang di SI Tourney</h1>
-                <p>Portal game terbesar di kelas Komputasi Awan</p>
+                <div className='intro-text'>
+                    <h1>Selamat Datang di SI Tourney</h1>
+                    <p>Portal turnamen game terbesar di kelas Komputasi Awan</p>
+                </div>
+                <div className='intro-image'>
+                    <img src={require('../static/img/Winners-rafiki.png')}></img>
+                </div>
             </div>
 
             <div className='auth-container'>
                 <div className='auth-content'>
-                    <form onSubmit={signIn}>
-                        <Input 
+                    <form onSubmit={signIn} className='auth-form'>
+                        <Input
                             type={'text'} 
                             placeholderText={'Username'} 
                             name={'username'} 
                             value={inputs.username || ''} 
-                            onChange={handleInputChange} 
+                            onChange={handleInputChange}
+                            customStyling={'uname-input'}
                         />
-                        <Input 
+                        <Input
                             type={'password'} 
                             placeholderText={'Password'} 
                             name={'password'} 
                             value={inputs.password || ''} 
                             onChange={handleInputChange}
+                            customStyling={'pwd-input'}
                         />
-                        <Button text={'Masuk'} type={'submit'} size={'small'} />
+                        <Button 
+                            text={'Masuk'} 
+                            type={'submit'} 
+                            size={'small'}
+                            customStyling={'login-btn'}
+                        />
                     </form>
                     <p>Atau daftarkan akun Anda di <Link to={'/register'}>sini</Link></p>
                 </div>
