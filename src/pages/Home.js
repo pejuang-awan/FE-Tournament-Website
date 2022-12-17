@@ -61,11 +61,6 @@ export default function Home() {
             })
     }
 
-    const logOut = () => {
-        sessionStorage.removeItem('user_data');
-        navigate('/');
-    };
-
     useEffect(() => {
 
         if (sessionStorage.getItem('user_data') === null) {
@@ -99,7 +94,7 @@ export default function Home() {
 
     return (
         <div className="home-container">
-            <Navbar isCreator={isCreator} toggleLogout={logOut} username={user.username || 'tamu'}/>
+            <Navbar isCreator={isCreator} username={user.username || 'tamu'}/>
             <div className="img-banner" style={{backgroundImage: `url(${imgBanner})`}}>
                 <div className="home-content">
                     <h1>Ikuti Berbagai Turnamen</h1>

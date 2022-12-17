@@ -1,10 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../static/css/components/Navbar.css';
 import MenuItems from './MenuItems';
 
 // TODO: Try to use relative route for submenus
-export default function Navbar({ isCreator, toggleLogout, username }) {
+export default function Navbar({ isCreator, username }) {
+    const navigate = useNavigate();
+
+    const logOut = () => {
+        sessionStorage.removeItem('user_data');
+        navigate('/');
+    };
+
     const navbarItems = [
         {
             title: 'Home',
@@ -21,12 +28,12 @@ export default function Navbar({ isCreator, toggleLogout, username }) {
                     },
                     {
                         title: 'Lihat Turnamen',
-                        url: '/tournament/list',
+                        url: '/tournament',
                     },
                 ] : [
                     {
                         title: 'Lihat Turnamen',
-                        url: '/tournament/list',
+                        url: '/tournament',
                     },
                 ]
         },
@@ -47,7 +54,7 @@ export default function Navbar({ isCreator, toggleLogout, username }) {
                 <div className='navbar-user-content'>
                     <p>Halo, <strong>{username}</strong></p>
                     <div className='navbar-user-logout'>
-                        <Link to='/'><img onClick={toggleLogout} src={require('../static/img/logout.png')} /></Link>
+                        <Link to='/'><img onClick={logOut} src={require('../static/img/logout.png')} /></Link>
                     </div>
                 </div>
             </div>
