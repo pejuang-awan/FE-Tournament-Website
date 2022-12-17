@@ -61,19 +61,25 @@ export default function Register() {
     return (
         <div className='main-container'>
             <div className='intro-container'>
-                <h1>Selamat Datang di SI Tourney</h1>
-                <p>Portal game terbesar di kelas Komputasi Awan</p>
+                <div className='intro-text'>
+                    <h1>Selamat Datang di SI Tourney</h1>
+                    <p>Portal turnamen game terbesar di kelas Komputasi Awan</p>
+                </div>
+                <div className='intro-image'>
+                    <img src={require('../static/img/Winners-rafiki.png')}></img>
+                </div>
             </div>
 
             <div className='auth-container'>
                 <div className='auth-content'>
-                    <form onSubmit={signUp}>
+                    <form onSubmit={signUp} className='auth-form'>
                         <Input 
                             type={'text'} 
                             placeholderText={'Username'} 
                             name={'username'} 
                             value={inputs.username || ''} 
-                            onChange={handleInputChange} 
+                            onChange={handleInputChange}
+                            customStyling={'uname-input'}
                         />
                         <Input 
                             type={'password'} 
@@ -81,6 +87,7 @@ export default function Register() {
                             name={'password'} 
                             value={inputs.password || ''} 
                             onChange={handleInputChange}
+                            customStyling={'pwd-input'}
                         />
                         <Select 
                             items={roles} 
@@ -96,7 +103,7 @@ export default function Register() {
                             value={selects.game || ''} 
                             onChange={handleSelectChange}
                         />
-                        <Button text={'Daftar'} type={'submit'} size={'small'} />
+                        <Button text={'Daftar'} type={'submit'} size={'small'} customStyling={'signup-btn'}/>
                     </form>
                     <p>Atau masuk dengan akun Anda di <Link to={'/login'}>sini</Link></p>
                 </div>

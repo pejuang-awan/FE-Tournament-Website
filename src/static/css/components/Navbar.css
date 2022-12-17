@@ -1,3 +1,12 @@
+a {
+    font-weight: var(--fw-reg);
+}
+
+a:hover {
+    font-weight: var(--fw-bold);
+    text-decoration: none;
+}
+
 .navbar-container {
     width: 100%;
     display: flex;
@@ -31,6 +40,10 @@
     color: black;
     font-size: 1.25rem;
     font-family: var(--ff-primary);
+    font-weight: var(--fw-reg);
+}
+
+.navbar-menus-list li button:hover {
     font-weight: var(--fw-bold);
 }
 
@@ -53,6 +66,10 @@
 .menu-item-dropdownable button{
     display: flex;
     gap: 10%;
+}
+
+.dropdown-btn.active {
+    font-weight: var(--fw-bold);
 }
 
 .dropdown-icon {
