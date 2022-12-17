@@ -9,31 +9,16 @@ label {
     font-family: var(--ff-primary);
 }
 
-input[type="text"] {
+input {
     width: 100%;
-    padding: 5px 25px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-family: var(--ff-secondary);
-}
-
-input[type="text"]::placeholder {
-    font-size: 1rem;
-    font-family: var(--ff-secondary);
-}
-
-input[type="password"] {
-    width: 100%;
-    padding: 5px 25px;
+    padding: 8px 16px;
     margin: 8px 0;
     border: 1px solid #ccc;
     border-radius: 12px;
     font-size: 1rem;
 }
 
-input[type="password"]::placeholder {
+input::placeholder {
     font-size: 1rem;
     font-family: var(--ff-secondary);
 }
