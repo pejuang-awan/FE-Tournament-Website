@@ -107,9 +107,15 @@ export default function Home() {
                         <Link to={'/tournament'}>
                             <Button text="Lihat Turnamen" size="large"/>
                         </Link>
-                        <Link to={'/tournament/create'}>
-                            <Button text="Buat Turnamen" size="large"/>
-                        </Link>   
+                        {(() => {
+                            if (isCreator) {
+                                return (
+                                    <Link to={'/tournament/create'}>
+                                        <Button text="Buat Turnamen" size="large"/>
+                                    </Link>
+                                )
+                            }
+                        })} 
                     </div>
                 </div>
             </div>
