@@ -13,7 +13,6 @@ export default function Register() {
     const navigate = useNavigate();
     const roles = ['Pendaftar', 'Kreator'];
     const games = ['Mobile Legends: Bang Bang', 'Dota 2', 'League of Legends: Wild Rift'];
-    const baseAuthURL = 'https://si-tourney-authentication-uuq75raixq-et.a.run.app';
 
     useEffect(() => {
         if (sessionStorage.getItem('user_data') !== null) {
@@ -51,7 +50,7 @@ export default function Register() {
         if (validateInput()) {
             await axios({
                 method: 'post',
-                url: baseAuthURL + '/api/auth/sign-up',
+                url: `${process.env.REACT_APP_BE_BASE_URL}` + 'auth/sign-up',
                 data: {
                     'username': inputs.username,
                     'password': inputs.password,

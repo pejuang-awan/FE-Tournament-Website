@@ -66,7 +66,7 @@ export default function TourneyList() {
 
     return (
         <div>
-            <Navbar isCreator={isCreator}/>
+        <Navbar isCreator={user.role === 2} username={user.username || 'tamu'}/>
             <div className='header-container'>
                 <div
                 className='banner'

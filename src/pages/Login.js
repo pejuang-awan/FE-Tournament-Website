@@ -8,7 +8,6 @@ import Input from '../components/Input';
 export default function Login() {
     const [inputs, setInputs] = useState({});
     const navigate = useNavigate();
-    const baseAuthURL = 'https://si-tourney-authentication-uuq75raixq-et.a.run.app';
 
     useEffect(() => {
         if (sessionStorage.getItem('user_data') !== null) {
@@ -40,7 +39,7 @@ export default function Login() {
         if (validateInput()) {
             await axios({
                 method: 'post',
-                url: baseAuthURL + '/api/auth/sign-in',
+                url: `${process.env.REACT_APP_BE_BASE_URL}` + 'auth/sign-in',
                 data: {
                     'username': inputs.username,
                     'password': inputs.password,

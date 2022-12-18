@@ -13,7 +13,6 @@ export default function CreateTourney() {
     const [inputs, setInputs] = useState({});
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    const baseAuthURL = 'https://si-tourney-authentication-uuq75raixq-et.a.run.app';
     const navigate = useNavigate();
     
     useEffect(() => {
@@ -80,8 +79,8 @@ export default function CreateTourney() {
 
             <div className='create-body-container'>
                 <div className='create-display-container'>
-                    <h1>Selamat Datang di SI Tourney</h1>
-                    <p>Portal game terbesar di kelas Komputasi Awan</p>
+                    <h1>Buat Turnamen</h1>
+                    <p>Bangun Turnamen untuk Kompetisi Permainan Anda</p>
                 </div>
 
                 <div className='create-container'>
