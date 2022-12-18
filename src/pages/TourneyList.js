@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import '../static/css/pages/TourneyList.css';
 import Navbar from '../components/Navbar';
 import TourneyCard from '../components/TourneyCard';
-import { imgURL } from '../constant/imgURL';
-import imgLink from '../helper/imgLink';
 import dayCalculator from '../helper/dayCalculator';
 import axios from 'axios';
 
@@ -14,23 +12,14 @@ export default function TourneyList() {
     const [isCreator, setIsCreator] = useState(false);
     const navigate = useNavigate();
     const [tournamentList, setTournamentList] = useState([]);
-    const [participantList, setParticipantList] = useState([]);
     const [imgBanner, setImgBanner] = useState('');
-    const [imgCard, setImgCard] = useState('');
+    const [imgType, setImgType] = useState(1);
     const [isfetched, setIsfetched] = useState(false);
 
     const logOut = () => {
         sessionStorage.removeItem('user_data');
         navigate('/');
     };
-
-    const getParticipantsNumber = (tourneyID) => {
-        if (participantList[tourneyID]) {
-            return participantList[tourneyID].length;
-        } else {
-            return 0;
-        }
-    }
 
     const truncate = (str, n) => {
         return (str.length > n) ? str.substr(0, n - 1) + '..' : str;
@@ -46,39 +35,7 @@ export default function TourneyList() {
         })
             .then((response) => {
                 const tournamentData = response.data.data;
-                console.log(tournamentData);
                 setTournamentList(tournamentData);
-
-                const promises = [];
-
-                tournamentData.forEach(tournament => {
-                    promises.push(
-                        axios(`${process.env.REACT_APP_BE_BASE_URL}` + 'tourney-registry/participants/' + tournament.ID,{ 
-                            method:'get',
-                            headers: {
-                                'Authorization': "Bearer " + user.token
-                            }
-                        })
-                    );
-                });
-
-                Promise.all(promises).then(results => {
-                    const tempList = {};
-
-                    results.forEach(result => {
-                        const url = result.request.responseURL.toString().split('/');
-                        const tourneyID = url[url.length-1]
-                        if (result.data.data != null){
-                            tempList[tourneyID] = result.data.data;
-                        } else {
-                            tempList[tourneyID] = [];
-                        }
-                    });
-
-                    setParticipantList(tempList);
-
-                });
-
             }).catch((error) => {
                 console.log(error);
             })
@@ -102,8 +59,7 @@ export default function TourneyList() {
 
         if (!isfetched && user.token !== undefined){
             fetchTournamentListData();
-            setImgBanner(imgLink(imgURL[user.gameType].TOURNEY_BANNER));
-            setImgCard(imgLink(imgURL[user.gameType].TOURNEY_CARD_HEADER));
+            setImgType(user.gameType);
             setIsfetched(true);
         }
     }, [user])
@@ -114,7 +70,7 @@ export default function TourneyList() {
             <div className='header-container'>
                 <div
                 className='banner'
-                style={{backgroundImage: `url(${imgBanner})`}}
+                style={{backgroundImage: `url(${require("../static/img/game/tourneybanner" + imgType + '.jpg')})`}}
                 />
                     <h1 className='game-name'><span>Mobile Legends: Bang Bang</span></h1>
                 </div>
@@ -126,18 +82,18 @@ export default function TourneyList() {
                                 <TourneyCard 
                                     name={truncate(tournament.name, 20)} 
                                     description={tournament.description}
-                                    imgUrl={imgCard}
-                                    participants={getParticipantsNumber(tournament.ID)}
+                                    gameId={user.gameType}
+                                    participants={tournament.registeredTeam}
                                     quota={tournament.maxTeam}
                                     deadline={dayCalculator(tournament.endDate)} 
                                 ></TourneyCard>
                             </div>
-                    ) 
-                    return (
-                        <>
-                            {content}
-                        </>
-                    )
+                        ) 
+                        return (
+                            <>
+                                {content}
+                            </>
+                        )
                     }
                 })()}
             </div>

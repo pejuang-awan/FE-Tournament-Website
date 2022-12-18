@@ -1,0 +1,44 @@
+.tourney-register-content {
+    display: flex;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+.tourney-register-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    width: 50%;
+}
+
+.tourney-register-form-container h1 {
+    font-size: 3rem;
+}
+
+.tourney-register-form {
+    text-align: center;
+}
+
+.tourney-register-intro-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+.tourney-register-intro-container {
+    display: flex;
+    align-items: center;
+}
+
+.tourney-register-intro-image {
+    margin-top: 2.5rem;
+    max-width: 35em;
+}
+
+.tourney-register-intro-image img {
+    max-width: 100%;
+    height: auto;
+}

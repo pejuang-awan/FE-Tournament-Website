@@ -10,6 +10,10 @@ button {
     padding: 0.75rem 2rem;
 }
 
+.button-medium {
+    padding: 1rem 4rem;
+}
+
 .button-large {
     font-size: 1.25rem;
     padding: 1rem 10rem;

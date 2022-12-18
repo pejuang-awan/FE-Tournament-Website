@@ -24,6 +24,19 @@ export default function CreateTourney() {
         }
     }, []);
 
+    const clearForm = () => {
+        setInputs('');
+        setStartDate(new Date());
+    };
+
+    const validateInput = () => {
+        if (inputs.name === undefined || inputs.description === undefined || inputs.location === undefined || inputs.prize === undefined || inputs.contact === undefined || inputs.maxTeam === undefined) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+
     const handleInputChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -32,28 +45,33 @@ export default function CreateTourney() {
 
     const create = async (event) => {
         event.preventDefault();
-        await axios({
-            method: 'post',
-            headers: {
-                'Authorization': "Bearer " + user.token
-            },
-            url: `${process.env.REACT_APP_BE_BASE_URL}` + 'tourney-manager/tournament',
-            data: {
-                'name': inputs.name,
-                'game': user.gameType,
-                'description': inputs.description,
-                'location': inputs.location,
-                'startDate': startDate,
-                'endDate': endDate,
-                'prize': parseInt(inputs.prize),
-                'contact': inputs.contact,
-                'maxTeam': parseInt(inputs.maxTeam),
-            },
-        }).then((response) => {
-            navigate('/tournament/detail/' + response.data['data']['ID']);
-        }).catch((error) => {
-            alert(error);
-        });
+        if (validateInput()){
+            await axios({
+                method: 'post',
+                headers: {
+                    'Authorization': "Bearer " + user.token
+                },
+                url: `${process.env.REACT_APP_BE_BASE_URL}` + 'tourney-manager/tournament',
+                data: {
+                    'name': inputs.name,
+                    'game': user.gameType,
+                    'description': inputs.description,
+                    'location': inputs.location,
+                    'startDate': startDate,
+                    'endDate': endDate,
+                    'prize': parseInt(inputs.prize),
+                    'contact': inputs.contact,
+                    'maxTeam': parseInt(inputs.maxTeam),
+                },
+            }).then((response) => {
+                navigate('/tournament/detail/' + response.data['data']['ID']);
+            }).catch((error) => {
+                alert(error);
+                clearForm();
+            });
+        } else {
+            alert('Mohon isi semua form');
+        }
     };
 
     return (
