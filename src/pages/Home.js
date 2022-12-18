@@ -103,10 +103,13 @@ export default function Home() {
                             <h2 id="team-total">{homeData.teamTotal}</h2>
                         </div>
                     </div>
-                    <div class="row">    
+                    <div class="row"> 
                         <Link to={'/tournament'}>
                             <Button text="Lihat Turnamen" size="large"/>
                         </Link>
+                        <Link to={'/tournament/create'}>
+                            <Button text="Buat Turnamen" size="large"/>
+                        </Link>   
                     </div>
                 </div>
             </div>
