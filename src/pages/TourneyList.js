@@ -9,7 +9,6 @@ import axios from 'axios';
 export default function TourneyList() {
 
     const [user, setUser] = useState({});
-    const [isCreator, setIsCreator] = useState(false);
     const navigate = useNavigate();
     const [tournamentList, setTournamentList] = useState([]);
     const [imgBanner, setImgBanner] = useState('');
@@ -53,9 +52,6 @@ export default function TourneyList() {
         if (user.token === null) {
             navigate('/');
         }
-        if (user.role === 2) {
-            setIsCreator(true);
-        }
 
         if (!isfetched && user.token !== undefined){
             fetchTournamentListData();
@@ -72,7 +68,17 @@ export default function TourneyList() {
                 className='banner'
                 style={{backgroundImage: `url(${require("../static/img/game/tourneybanner" + imgType + '.jpg')})`}}
                 />
-                    <h1 className='game-name'><span>Mobile Legends: Bang Bang</span></h1>
+                    <h1 className='game-name'>
+                        <span>
+                            {(() => {
+                                switch (user.gameType) {
+                                    case 1: return "Mobile Legends: Bang Bang";
+                                    case 2: return "Dota 2";
+                                    case 3: return "LOL: Wild Rift";
+                                }
+                            })()}
+                        </span>
+                    </h1>
                 </div>
             <div className='body-container'>
                 {(() => {

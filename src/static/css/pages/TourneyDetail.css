@@ -52,6 +52,7 @@
     flex-direction: row;
     height: 100%;
     gap: 2em;
+    flex-wrap: wrap;
 }
 
 .banner-span{
