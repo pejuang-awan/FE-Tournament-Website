@@ -26,22 +26,35 @@ export default function Login() {
         setInputs(values => ({...values, [name]:value}));
     };
 
+    const validateInput = () => {
+        if (inputs.username === undefined || inputs.password === undefined) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+
     const signIn = async (event) => {
         event.preventDefault();
-        await axios({
-            method: 'post',
-            url: baseAuthURL + '/api/auth/sign-in',
-            data: {
-                'username': inputs.username,
-                'password': inputs.password,
-            },
-        }).then((response) => {
-            sessionStorage.setItem('user_data', JSON.stringify(response.data.data));
-            navigate('/home');
-        }).catch((error) => {
-            alert(error);
-            clearForm();
-        });
+
+        if (validateInput()) {
+            await axios({
+                method: 'post',
+                url: baseAuthURL + '/api/auth/sign-in',
+                data: {
+                    'username': inputs.username,
+                    'password': inputs.password,
+                },
+            }).then((response) => {
+                sessionStorage.setItem('user_data', JSON.stringify(response.data.data));
+                navigate('/home');
+            }).catch((error) => {
+                alert(error);
+                clearForm();
+            });
+        } else {
+            alert('Mohon isi semua form');
+        }
     };
 
     return (

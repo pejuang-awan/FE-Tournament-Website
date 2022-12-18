@@ -38,24 +38,36 @@ export default function Register() {
         setSelects(selects => ({...selects, [name]:value}))
     };
 
+    const validateInput = () => {
+        if (inputs.username === undefined || inputs.password === undefined || selects.role === undefined || selects.game === undefined) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+
     const signUp = async (event) => {
         event.preventDefault();
-        await axios({
-            method: 'post',
-            url: baseAuthURL + '/api/auth/sign-up',
-            data: {
-                'username': inputs.username,
-                'password': inputs.password,
-                'role': parseInt(selects.role),
-                'gameType': parseInt(selects.game),
-            },
-        }).then((response) => {
-            sessionStorage.setItem('user_data', JSON.stringify(response.data.data));
-            navigate('/home');
-        }).catch((error) => {
-            alert(error);
-            clearForm();
-        });
+        if (validateInput()) {
+            await axios({
+                method: 'post',
+                url: baseAuthURL + '/api/auth/sign-up',
+                data: {
+                    'username': inputs.username,
+                    'password': inputs.password,
+                    'role': parseInt(selects.role),
+                    'gameType': parseInt(selects.game),
+                },
+            }).then((response) => {
+                sessionStorage.setItem('user_data', JSON.stringify(response.data.data));
+                navigate('/home');
+            }).catch((error) => {
+                alert(error);
+                clearForm();
+            });
+        } else {
+            alert('Mohon isi semua form');
+        }
     };
 
     return (
