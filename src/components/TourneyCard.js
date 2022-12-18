@@ -3,14 +3,14 @@ import '../static/css/components/TourneyCard.css';
 import { RiTeamFill } from "react-icons/ri";
 import { FiClock } from "react-icons/fi";
 
-export default function tourneyCard({ name, description, participants, quota, deadline, imgUrl}) {
+export default function tourneyCard({ name, description, participants, quota, deadline, gameId}) {
     return (
         <div className='tourney-card'>
             <div className='tourney-card-container'>
                 <div className='tourney-card-banner'>
                     <div 
                     className='tourney-banner-img'
-                    style={{backgroundImage: `url(${imgUrl})`}}
+                    style={{backgroundImage: `url(${require("../static/img/game/tourneycard" + gameId + '.jpg')})`}}
                     />
                     <p className='tourney-card-name'><span>{name}</span></p>
                 </div>

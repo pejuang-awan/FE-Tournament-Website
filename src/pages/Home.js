@@ -3,8 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from "../components/Button";
 import '../static/css/pages/Home.css';
 import Navbar from "../components/Navbar";
-import { imgURL } from "../constant/imgURL";
-import imgLink from "../helper/imgLink";
 import gcdCalc from "../helper/gcdCalc";
 import axios from 'axios';
 
@@ -13,13 +11,12 @@ export default function Home() {
     const [user, setUser] = useState({});
     const [isCreator, setIsCreator] = useState(false);
     const navigate = useNavigate();
-    const [imgBanner, setImgBanner] = useState('');
+    const [imgType, setImgType] = useState(1);
     const [isfetched, setIsfetched] = useState(false);
     const [homeData, setHomeData] = useState({
         'teamTotal': 0,
         'tournamentTotal':0
     })
-    const staticDuration = 500;
 
     function animateValue(obj, start, end, duration) {
         let startTimestamp = null;
@@ -38,7 +35,7 @@ export default function Home() {
         const obj1 = document.getElementById("tournament-total");
         const obj2 = document.getElementById("team-total");
 
-        const duration = gcdCalc(homeData.tournamentTotal, homeData.teamTotal) * staticDuration;
+        const duration = gcdCalc(homeData.tournamentTotal, homeData.teamTotal) * 500;
 
         animateValue(obj1, 0, homeData.tournamentTotal ?? 0, duration);
         animateValue(obj2, 0, homeData.teamTotal ?? 0, duration);
@@ -80,7 +77,7 @@ export default function Home() {
 
         if (!isfetched && user.token !== undefined){
             fetchHomeData();
-            setImgBanner(imgLink(imgURL[user.gameType].TOURNEY_HOME));
+            setImgType(user.gameType);
             setIsfetched(true);
         }
     }, [user])
@@ -93,7 +90,7 @@ export default function Home() {
     return (
         <div className="home-container">
             <Navbar isCreator={isCreator} username={user.username || 'tamu'}/>
-            <div className="img-banner" style={{backgroundImage: `url(${imgBanner})`}}>
+            <div className="img-banner" style={{backgroundImage: `url(${require("../static/img/game/tourneyhome" + imgType + '.jpg')})`}}>
                 <div className="home-content">
                     <h1>Ikuti Berbagai Turnamen</h1>
                     <div class="row">
@@ -108,7 +105,7 @@ export default function Home() {
                     </div>
                     <div class="row">    
                         <Link to={'/tournament'}>
-                            <Button text="Lihat Turnamen" size="medium"/>
+                            <Button text="Lihat Turnamen" size="large"/>
                         </Link>
                     </div>
                 </div>
