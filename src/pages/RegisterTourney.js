@@ -127,7 +127,9 @@ export default function RegisterTourney() {
                     </form>
                 </div>
                 <div className='tourney-register-intro-container'>
-                    <h1>Daftar Tourney</h1>
+                    <div className='tourney-register-intro-image'>
+                        <img src={require('../static/img/Team goals-amico.png')}></img>
+                    </div>
                 </div>
             </div>
         </div>

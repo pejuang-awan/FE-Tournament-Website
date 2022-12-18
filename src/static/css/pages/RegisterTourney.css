@@ -12,6 +12,10 @@
     width: 50%;
 }
 
+.tourney-register-form-container h1 {
+    font-size: 3rem;
+}
+
 .tourney-register-form {
     text-align: center;
 }
@@ -23,35 +27,18 @@
     align-items: center;
     width: 50%;
 }
-/*
-.intro-text {
-    margin-bottom: 25em;
-    z-index: 1;
-    text-align: center;
-    font-size: 1.15rem;
+
+.tourney-register-intro-container {
+    display: flex;
+    align-items: center;
 }
 
-.intro-text h1 {
-    font-weight: var(--fw-bold);
-}
-
-.intro-image {
-    position: absolute;
-    bottom: 0;
+.tourney-register-intro-image {
+    margin-top: 2.5rem;
     max-width: 35em;
 }
 
-.intro-image img {
+.tourney-register-intro-image img {
     max-width: 100%;
     height: auto;
-} */
-
-/* #uname-input, #pwd-input {
-    padding: 15px 30px;
 }
-
-.login-btn {
-    margin-top: 1.25em;
-    padding: 1rem 3rem;
-    font-size: 1.1rem;
-} */
