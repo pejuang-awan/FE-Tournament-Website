@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import TeamCard from '../components/TeamCard';
-import { imgURL } from '../constant/imgURL';
-import imgLink from '../helper/imgLink';
 import axios from 'axios';
 import '../static/css/pages/TourneyDetail.css';
 import Button from '../components/Button';
@@ -14,8 +12,7 @@ export default function TourneyDetail() {
 	const [user, setUser] = useState({});
 	const [isCreator, setIsCreator] = useState(false);
 	const navigate = useNavigate();
-	const [imgBanner, setImgBanner] = useState('');
-	const [imgTeam, setImgTeam] = useState('');
+	const [imgType, setImgType] = useState(1);
 	const [isfetched, setIsfetched] = useState(false);
 	const [tournamentData, setTournamentData] = useState({});
 	const [participantList, setParticipantList] = useState([]);
@@ -74,9 +71,9 @@ export default function TourneyDetail() {
 		if (!isfetched && user.token !== undefined) {
 			fetchTournamentDetailData();
 			fetchParticipantList();
-			setImgBanner(imgLink(imgURL[user.gameType].TOURNEY_BANNER));
-			setImgTeam(imgLink(imgURL[user.gameType].TEAM_CARD));
+			setImgType(user.gameType);
 			setIsfetched(true);
+			console.log(user);
 		}
 	}, [user])
 
@@ -93,7 +90,7 @@ export default function TourneyDetail() {
 		<div>
             <Navbar isCreator={isCreator}/>
             <div className='header-container'>
-                <div className='banner' style={{backgroundImage: `url(${imgBanner})`}}>
+                <div className='banner' style={{backgroundImage: `url(${require("../static/img/game/tourneybanner" + imgType + '.jpg')})`}}>
 					<div className='banner-content'>
 						<div className='left-content'>
 							<div className='banner-title'><span className='banner-span'>{tournamentData.name}</span></div>
@@ -150,11 +147,10 @@ export default function TourneyDetail() {
 									<div key={teams.name}>
 										<TeamCard
 											teamData={teams}
-											imgUrl={imgTeam}
+											gameId={user.gameType}
 										/>
 									</div>
 								)
-								console.log(content);
 								return (
 									<>{content}</>
 								)

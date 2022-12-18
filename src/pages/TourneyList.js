@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import '../static/css/pages/TourneyList.css';
 import Navbar from '../components/Navbar';
 import TourneyCard from '../components/TourneyCard';
-import { imgURL } from '../constant/imgURL';
-import imgLink from '../helper/imgLink';
 import dayCalculator from '../helper/dayCalculator';
 import axios from 'axios';
 
@@ -15,7 +13,7 @@ export default function TourneyList() {
     const navigate = useNavigate();
     const [tournamentList, setTournamentList] = useState([]);
     const [imgBanner, setImgBanner] = useState('');
-    const [imgCard, setImgCard] = useState('');
+    const [imgType, setImgType] = useState(1);
     const [isfetched, setIsfetched] = useState(false);
 
     const logOut = () => {
@@ -37,7 +35,6 @@ export default function TourneyList() {
         })
             .then((response) => {
                 const tournamentData = response.data.data;
-                console.log(tournamentData);
                 setTournamentList(tournamentData);
             }).catch((error) => {
                 console.log(error);
@@ -62,8 +59,7 @@ export default function TourneyList() {
 
         if (!isfetched && user.token !== undefined){
             fetchTournamentListData();
-            setImgBanner(imgLink(imgURL[user.gameType].TOURNEY_BANNER));
-            setImgCard(imgLink(imgURL[user.gameType].TOURNEY_CARD_HEADER));
+            setImgType(user.gameType);
             setIsfetched(true);
         }
     }, [user])
@@ -74,7 +70,7 @@ export default function TourneyList() {
             <div className='header-container'>
                 <div
                 className='banner'
-                style={{backgroundImage: `url(${imgBanner})`}}
+                style={{backgroundImage: `url(${require("../static/img/game/tourneybanner" + imgType + '.jpg')})`}}
                 />
                     <h1 className='game-name'><span>Mobile Legends: Bang Bang</span></h1>
                 </div>
@@ -86,7 +82,7 @@ export default function TourneyList() {
                                 <TourneyCard 
                                     name={truncate(tournament.name, 20)} 
                                     description={tournament.description}
-                                    imgUrl={imgCard}
+                                    gameId={user.gameType}
                                     participants={tournament.registeredTeam}
                                     quota={tournament.maxTeam}
                                     deadline={dayCalculator(tournament.endDate)} 
