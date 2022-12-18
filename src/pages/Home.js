@@ -108,14 +108,14 @@ export default function Home() {
                             <Button text="Lihat Turnamen" size="large"/>
                         </Link>
                         {(() => {
-                            if (isCreator) {
+                            if (user.role === 2) {
                                 return (
                                     <Link to={'/tournament/create'}>
                                         <Button text="Buat Turnamen" size="large"/>
                                     </Link>
                                 )
                             }
-                        })} 
+                        })()} 
                     </div>
                 </div>
             </div>

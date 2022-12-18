@@ -10,7 +10,6 @@ export default function TourneyDetail() {
 
 	const { idTournament } = useParams();
 	const [user, setUser] = useState({});
-	const [isCreator, setIsCreator] = useState(false);
 	const navigate = useNavigate();
 	const [imgType, setImgType] = useState(1);
 	const [isfetched, setIsfetched] = useState(false);
@@ -24,11 +23,6 @@ export default function TourneyDetail() {
 			setUser(JSON.parse(sessionStorage.getItem('user_data')));
 		}
 	}, []);
-
-	const logOut = () => {
-		sessionStorage.removeItem('user_data');
-		navigate('/');
-	};
 
 	const fetchTournamentDetailData = async () => {
 		axios({
@@ -64,9 +58,6 @@ export default function TourneyDetail() {
 		if (user.token === null) {
 			navigate('/');
 		}
-		if (user.role === 2) {
-			setIsCreator(true);
-		}
 
 		if (!isfetched && user.token !== undefined) {
 			fetchTournamentDetailData();
@@ -88,7 +79,7 @@ export default function TourneyDetail() {
 
 	return (
 		<div>
-            <Navbar isCreator={isCreator}/>
+            <Navbar isCreator={user.role === 2} username={user.username || 'tamu'}/>
             <div className='header-container'>
                 <div className='banner' style={{backgroundImage: `url(${require("../static/img/game/tourneybanner" + imgType + '.jpg')})`}}>
 					<div className='banner-content'>
@@ -112,13 +103,19 @@ export default function TourneyDetail() {
 											</span>
 										</div>
 										<div className='button-container'>
-											<Button
-												className={'button-register'} 
-												text={isCreator? 'Edit Tournament' : 'Daftar'} 
-												type={'button'} 
-												size={'medium'}
-												onClick={() => !isCreator && navigate('../register/' + idTournament)}
-												/>
+											{(() => {
+												if (user.role === 1) {
+												return (
+													<Button
+														className={'button-register'} 
+														text={'Daftar'} 
+														type={'button'} 
+														size={'medium'}
+														onClick={() => navigate('../register/' + idTournament)}
+														/>
+												)
+												}
+											})()}
 										</div>
 									</>
 								)
