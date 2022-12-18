@@ -4,7 +4,12 @@
     border: 2px solid;
     overflow: hidden;
     border-radius: 1em;
+    cursor: pointer;
 }
+
+/* .tourney-card::hover{
+    cursor: pointer;
+} */
 
 .tourney-card-container{
     display: flex;

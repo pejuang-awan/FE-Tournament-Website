@@ -53,7 +53,6 @@ export default function Home() {
         })
             .then((response) => {
                 const data =  response.data.data;
-                console.log(data.teamTotal);
                 setHomeData({
                     'teamTotal': data.teamTotal,
                     'tournamentTotal': data.tournamentTotal
@@ -80,7 +79,6 @@ export default function Home() {
         }
 
         if (!isfetched && user.token !== undefined){
-            console.log(user);
             fetchHomeData();
             setImgBanner(imgLink(imgURL[user.gameType].TOURNEY_HOME));
             setIsfetched(true);
